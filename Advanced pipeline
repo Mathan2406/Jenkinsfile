@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define environment variables here
+        DEPLOY_ENV = "staging"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Insert build commands here, e.g., mvn clean install
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Insert test commands here, e.g., mvn test
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying to ${env.DEPLOY_ENV}..."
+                // Insert deploy commands here
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            // Insert cleanup commands here
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
